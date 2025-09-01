@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Satellite Governance System</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- GSAP for animation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body class="bg-gray-950 text-white font-sans min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="text-center py-6 border-b border-gray-800">
+    <h1 class="text-3xl font-bold text-blue-400">AI Satellite Governance System</h1>
+    <p class="text-gray-400 text-sm">Real-time orbital monitoring & governance dashboard</p>
+  </header>
+
+  <!-- Main Layout -->
+  <main class="flex flex-1 flex-col md:flex-row">
+    
+    <!-- Left Panel: Orbit -->
+    <section class="flex-1 flex items-center justify-center p-6">
+      <div class="relative w-64 h-64">
+        <!-- Orbit Circle -->
+        <div class="absolute inset-0 rounded-full border-2 border-blue-600/40"></div>
+        <!-- Earth -->
+        <div class="absolute w-20 h-20 bg-blue-500 rounded-full shadow-lg inset-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center text-white font-bold">
+          🌍
+        </div>
+        <!-- Satellite -->
+        <div id="satellite" class="absolute w-8 h-8 bg-gray-300 rounded-full shadow-xl flex items-center justify-center text-black font-bold">
+          🛰️
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Panel: Dashboard -->
+    <section class="flex-1 p-6 border-t md:border-t-0 md:border-l border-gray-800">
+      <h2 class="text-xl font-semibold text-blue-300 mb-4">Dashboard</h2>
+      <div class="space-y-4">
+        <div class="p-4 bg-gray-900 rounded-xl shadow">
+          <p class="text-gray-400 text-sm">Satellite ID</p>
+          <p class="text-lg font-bold">SAT-001</p>
+        </div>
+        <div class="p-4 bg-gray-900 rounded-xl shadow">
+          <p class="text-gray-400 text-sm">Status</p>
+          <p class="text-lg font-bold text-green-400">Operational</p>
+        </div>
+        <div class="p-4 bg-gray-900 rounded-xl shadow">
+          <p class="text-gray-400 text-sm">Next Checkpoint</p>
+          <p class="text-lg font-bold">T+ 2h 45m</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Event Log -->
+  <section class="p-6 border-t border-gray-800 bg-gray-900">
+    <h2 class="text-lg font-semibold text-blue-300 mb-2">Event Log</h2>
+    <ul class="space-y-2 text-sm max-h-40 overflow-y-auto" id="event-log">
+      <li class="text-green-400">[12:00] Satellite entered stable orbit.</li>
+      <li class="text-yellow-400">[12:10] Monitoring data sync initiated.</li>
+    </ul>
+  </section>
+
+  <!-- Animation Script -->
+  <script>
+    // Animate satellite orbit using GSAP
+    gsap.to("#satellite", {
+      duration: 10,
+      repeat: -1,
+      ease: "linear",
+      motionPath: {
+        path: "M128,32 A96,96 0 1,1 127.9,32", // orbit path
+        align: "self",
+        autoRotate: true
+      }
+    });
+
+    // Add random log messages
+    const log = document.getElementById("event-log");
+    const messages = [
+      "Telemetry update received.",
+      "AI risk scan completed.",
+      "New governance directive applied.",
+      "Orbital path adjusted by 0.2°.",
+      "System health check: all clear."
+    ];
+
+    setInterval(() => {
+      const msg = messages[Math.floor(Math.random() * messages.length)];
+      const li = document.createElement("li");
+      li.className = "text-blue-400";
+      li.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+      log.prepend(li);
+      if (log.children.length > 20) log.removeChild(log.lastChild);
+    }, 5000);
+  </script>
+</body>
+</html>
